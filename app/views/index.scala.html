@@ -1,7 +1,175 @@
-@(message: String)
+@(message: String, params: models.params.GlobalParams)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message, style = "Java")
-    
+@main("Default") {
+
+	<div id="edit-dialog" title="Story editor">
+		<textarea id="edit-dialog-story" cols="80" rows="20">
+		</textarea>
+	</div>
+	<div id="report-dialog" title="Report">
+		<textarea id="report-dialog-story" cols="80" rows="20">
+		</textarea>
+	</div>
+
+	<script>
+		/**
+		 * call a remote ws
+		 * #param action, remote action
+		 * #param data, data to send
+		 * #param func, function success to call
+		 */
+		function wsCall(action,data,func) {
+			var l = window.location;
+			var base_url = l.protocol + "//" + l.host;
+			/**
+			 * ajax call
+			 */
+			$.ajax({
+		        url: base_url + action,
+		        type: "POST",
+		        data: JSON.stringify(data),
+		        dataType: "json",
+		        success: func
+		    });
+		}
+
+		/**
+		 * document initialization
+		 */
+		$(document).ready(function () {
+			$('#edit-dialog').dialog({width: 750, autoOpen: false});
+			$('#edit-dialog-story').markItUp('');
+			$('#report-dialog').dialog({width: 750, autoOpen: false, modal: true});
+			$('#report-dialog-story').markItUp('');
+
+			/**
+			 * script editor part
+			 */
+			$('#script-editor-container').markItUp('');
+			$('#script-validator-container').markItUp('');
+			$('#script-validator-output').markItUp('');
+			$('#accordion').accordion();
+			
+			$( "#render-script" ).button().click(function( event ) {renderScript();});
+			$( "#execute-script" ).button().click(function( event ) {executeScript();});
+			$( "#render-reload" ).button().click(function( event ) {renderReload();});
+			
+			/**
+			 * dialog part
+			 */
+			$( "#dialog-scenarios" ).dialog({ width: 650, height: 450 });
+			$( "#dialog-entities" ).dialog({ width: 650, height: 450 });
+			$( "#dialog-fields" ).dialog({ width: 650, height: 450 });
+			$( "#dialog-scripts" ).dialog({ width: 700, height: 500 });
+		});
+
+		/**
+		 * call a story, and render it
+		 * #param data, the story to execute
+		 */
+		function renderScript() {
+			wsCall( "rest/scenario/render",
+					{storyId: -1, rawScript: $('#script-editor-container').val()},
+					function(node){
+			        	$('#script-validator-container').html(node.renderedScript);
+			        	$('#script-validator-output').html(node.renderedStdout);
+			        }
+			);
+		}
+
+		/**
+		 * call a story, and execute it
+		 * #param data, the story to execute
+		 */
+		function executeScript() {
+			wsCall( "rest/scenario/execute",
+					{storyId: -1, rawScript: $('#script-editor-container').val()},
+					function(node){
+			        	$('#script-validator-container').html(node.renderedScript);
+			        	$('#script-validator-output').html(node.renderedStdout);
+			        }
+			);
+		}
+
+		/**
+		 * call a story, and execute it
+		 * #param data, the story to execute
+		 */
+		function renderReload() {
+			wsCall( "/rest/reload",
+					{},
+					function(node){
+			        	$('#script-validator-container').html("Database reloaded ...");
+			        }
+			);
+		}
+
+		/**
+		 * call a story, and execute it
+		 * #param data, the story to execute
+		 */
+		function executeScenario(data) {
+			/**
+			 * ajax call to execute this scenario
+			 */
+			$.ajax({
+		        type: 'GET',
+		        url: $(location).attr('href') + 'rest/scenario/' + data.record.Id + '/execute',
+		        dataType: "json",
+		        success: function(data){
+		        	$('#report-dialog').dialog('open');
+		        	$('#report-dialog-story').html(data.Result);
+		        }
+		    });
+		}
+
+		/**
+		 * print a story, and edit it
+		 * #param data, the story to read
+		 */
+		function editScenario(data) {
+			/**
+			 * ajax call to read and print this story
+			 */
+			$.ajax({
+		        type: 'GET',
+		        url: $(location).attr('href') + 'rest/scenario/' + data.record.Id + '/story',
+		        dataType: "json",
+		        success: function(data){
+		        	$('#edit-dialog').dialog('open');
+		        	$('#edit-dialog-story').html(data.Story);
+		        }
+		    });
+		}
+
+		/**
+		 * script injection
+		 */
+		@helper.jsTree(params.getJsTreeParams("Scenarios"))
+		@helper.jsTree(params.getJsTreeParams("Entities"))
+		@helper.jsTree(params.getJsTreeParams("Fields"))
+	</script>
+
+    <div id="dialog-scenarios" title="Scenarios browser">
+		@helper.jsTreeHtml(params.getJsTreeParams("Scenarios"))
+    </div>
+    <div id="dialog-entities" title="Entities browser">
+		@helper.jsTreeHtml(params.getJsTreeParams("Entities"))
+    </div>
+    <div id="dialog-fields" title="Fields browser">
+		@helper.jsTreeHtml(params.getJsTreeParams("Fields"))
+    </div>
+    <div id="dialog-scripts" title="Script editor">
+    	<button id="render-script">Render</button>
+    	<button id="execute-script">Execute</button>
+    	<button id="render-reload">Reload</button>
+    	<div id="accordion">
+   		<h3>Raw script</h3>
+		<div><textarea id="script-editor-container" cols="80" rows="10">$context.byName("Entity de test #10")</textarea></div>
+   		<h3>Rendered script</h3>
+		<div><textarea id="script-validator-container" cols="80" rows="10"></textarea></div>
+   		<h3>Output</h3>
+		<div><textarea id="script-validator-output" cols="80" rows="10"></textarea></div>
+		</div>
+    </div>
 }

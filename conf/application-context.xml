@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<!-- Application injection -->
+    <bean id="scenarioApp" class="service.application.ScenarioApp">
+    	<property name="scenarioSvc" ref="scenarioSvc"></property>
+    </bean>
+
+    <bean id="objectEntityApp" class="service.application.ObjectEntityApp">
+    	<property name="objectEntitySvc" ref="objectEntitySvc"></property>
+    	<property name="objectFieldSvc" ref="objectFieldSvc"></property>
+    </bean>
+
+    <bean id="objectFinderApp" class="service.application.ObjectFinderApp">
+    	<property name="objectEntitySvc" ref="objectEntitySvc"></property>
+    	<property name="objectFieldSvc" ref="objectFieldSvc"></property>
+    	<property name="scenarioSvc" ref="scenarioSvc"></property>
+    </bean>
+
+	<!-- Business injection -->
+    <bean id="scenarioSvc" class="service.business.ScenarioSvc" />
+    <bean id="objectEntitySvc" class="service.business.ObjectEntitySvc" />
+    <bean id="objectFieldSvc" class="service.business.ObjectFieldSvc" />
+    <bean id="objectFieldValueSvc" class="service.business.ObjectFieldValueSvc" />
+
+	<!-- Entity injection -->
+
+	<!-- Bean injection -->
+</beans>

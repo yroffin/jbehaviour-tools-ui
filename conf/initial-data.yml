@@ -1,0 +1,45 @@
+# you describe your data using the YAML notation here
+# and then load them using Yaml.load("data.yml")
+
+scenarios:
+- &scenario10 !!models.entity.core.Scenario {id: 10, name: "Scenario de test scenario#10", description: "default description", story: "Given create local resource 'file://u:/tmp' identified by 'localhost'\nAnd create ssh resource 'ssh://Yannick:nathalie@192.168.1.130' identified by 'gandalf'\nWhen open resource 'gandalf'\nThen check if 'screenshot.png' exist on 'localhost'\nThen check if '/tmp/screenshot.png' exist on 'gandalf'\n", lastUpdate: 2007-01-02}
+- &scenario20 !!models.entity.core.Scenario {id: 20, name: "Scenario de test scenario#20", description: "default description", story: "Given a new session\nAnd also\nWhen i go to 'http://www.google.fr'\nThen the url must like 'http://www.google.fr'\nThen close\n", lastUpdate: 2007-01-02}
+- &scenario30 !!models.entity.core.Scenario {id: 30, name: "Scenario de test scenario#30", description: "default description", story: "", lastUpdate: 2007-01-02}
+
+level10:
+- &child101 !!models.entity.core.ObjectEntity {id: 101, name: "Child de test #101", description: "default description\nligne suivante 1", lastUpdate: 2007-01-02}
+- &child102 !!models.entity.core.ObjectEntity {id: 102, name: "Child de test #102", description: "default description\nligne suivante 2", lastUpdate: 2007-01-02}
+- &child103 !!models.entity.core.ObjectEntity {id: 103, name: "Child de test #103", description: "default description\nligne suivante 3", lastUpdate: 2007-01-02}
+
+level20:
+- &child201 !!models.entity.core.ObjectEntity {id: 201, name: "Child de test #201", description: "default description", lastUpdate: 2007-01-02}
+- &child202 !!models.entity.core.ObjectEntity {id: 202, name: "Child de test #202", description: "default description", lastUpdate: 2007-01-02}
+- &child203 !!models.entity.core.ObjectEntity {id: 203, name: "Child de test #203", description: "default description", lastUpdate: 2007-01-02}
+
+level301:
+- &child3011 !!models.entity.core.ObjectEntity {id: 3011, name: "Child de test #3011", description: "default description", lastUpdate: 2007-01-02}
+- &child3012 !!models.entity.core.ObjectEntity {id: 3012, name: "Child de test #3012", description: "default description", lastUpdate: 2007-01-02}
+- &child3013 !!models.entity.core.ObjectEntity {id: 3013, name: "Child de test #3013", description: "default description", lastUpdate: 2007-01-02}
+
+level30:
+- &child301 !!models.entity.core.ObjectEntity {id: 301, name: "Child de test #301", description: "default description", lastUpdate: 2007-01-02, children: [*child3011,*child3012,*child3013]}
+- &child302 !!models.entity.core.ObjectEntity {id: 302, name: "Child de test #302", description: "default description", lastUpdate: 2007-01-02}
+- &child303 !!models.entity.core.ObjectEntity {id: 303, name: "Child de test #303", description: "default description", lastUpdate: 2007-01-02}
+
+fields:
+- &field9910 !!models.entity.core.ObjectField {id: 9910, name: "Field de test #9910", description: "default description", type: "String", size: 16, lastUpdate: 2007-01-02}
+- &field9920 !!models.entity.core.ObjectField {id: 9920, name: "Field de test #9920", description: "default description", type: "String", size: 16, lastUpdate: 2007-01-02}
+- &field9930 !!models.entity.core.ObjectField {id: 9930, name: "Field de test #9930", description: "default description", type: "String", size: 16, lastUpdate: 2007-01-02}
+
+root:
+- &items10 !!models.entity.core.ObjectEntity {id: 10, name: "Entity de test #10", description: "default description", lastUpdate: 2007-01-02, children: [*child101,*child102,*child103]}
+- &items20 !!models.entity.core.ObjectEntity {id: 20, name: "Entity de test #20", description: "default description", lastUpdate: 2007-01-02, children: [*child201,*child202,*child203]}
+- &items30 !!models.entity.core.ObjectEntity {id: 30, name: "Entity de test #30", description: "default description", lastUpdate: 2007-01-02, children: [*child301,*child302,*child303]}
+
+values:
+- &value101_9910 !!models.entity.core.ObjectFieldValue {id: 1019910, value: "Value de test #1019910", field: *field9910, entity: *child101, lastUpdate: 2007-01-02}
+- &value101_9920 !!models.entity.core.ObjectFieldValue {id: 1019920, value: "Value de test #1019920", field: *field9920 , entity: *child101,  lastUpdate: 2007-01-02}
+- &value101_9930 !!models.entity.core.ObjectFieldValue {id: 1019930, value: "Value de test #1019930", field: *field9930 , entity: *child101,  lastUpdate: 2007-01-02}
+- &value20_9910 !!models.entity.core.ObjectFieldValue {id: 209910, value: "Value de test #209910", field: *field9910, entity: *items20, lastUpdate: 2007-01-02}
+- &value20_9920 !!models.entity.core.ObjectFieldValue {id: 209920, value: "Value de test #209920", field: *field9920 , entity: *items20,  lastUpdate: 2007-01-02}
+- &value20_9930 !!models.entity.core.ObjectFieldValue {id: 209930, value: "Value de test #209930", field: *field9930 , entity: *items20,  lastUpdate: 2007-01-02}

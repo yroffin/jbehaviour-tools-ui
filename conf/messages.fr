@@ -1,0 +1,29 @@
+# Messages
+
+item.id=Id.
+item.name=Nom
+item.delete=Supprimer
+item.up=Monter
+item.down=Descendre
+item.add=Ajouter
+item.subitems=Sous niveau
+
+scenario.title=Gestion des scénarios
+scenario.update=Création ou mise à jour d'un scénario
+scenario.legend=Information du scénario
+scenario.name=Nom du scénario
+scenario.name.placeholder=Définir le nom du scénario
+scenario.description=Description du scénario
+scenario.description.placeholder=Description du scénario
+
+step.title=Gestion des steps
+scenario.update=Création ou mise à jour d'un step
+step.legend=Information du step
+step.name=Nom du step
+step.name.placeholder=Définir le nom du step
+step.description=Description du step
+step.description.placeholder=Description du step
+
+action.validate=Valider
+action.cancel=Annuler
+

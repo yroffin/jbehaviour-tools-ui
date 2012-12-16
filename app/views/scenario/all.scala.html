@@ -1,0 +1,39 @@
+@(myBeans: List[models.bean.core.ScenarioBean])
+
+@main(Messages("scenario.title")) {
+	<h1 class="well">@Messages("scenario.title")</h1>
+	<br>
+    <table class="table table-striped table-bordered table-condensed">
+    <thead>
+      <tr>
+      	<th>@Messages("item.id")</th>
+        <th>@Messages("item.name")</th>
+        <th>@Messages("item.subitems")</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for(bean <- myBeans) {
+      <tr>
+      	<td><a href="@routes.Scenario.update(bean.getId())">@bean.getId()</a></td>
+        <td>@bean.getName()</td>
+      	<td></td>
+        <td><i class="icon-trash"></td>
+        <td><i class="icon-arrow-up"></td>
+        <td><i class="icon-arrow-down"></td>
+      </tr>
+    } 
+    <tr>
+  		<td><a href="@routes.Scenario.create()"><i class="icon-plus"></i></a>@Messages("item.add")</td>
+  		<td></td>
+  		<td></td>
+  		<td></td>
+  		<td></td>
+  		<td></td>
+    </tr>
+    </tbody>
+    </table>
+}
+      

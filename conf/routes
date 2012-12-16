@@ -3,7 +3,45 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                            controllers.Application.index()
+GET     /rest/reload                 controllers.Application.reload
+POST    /rest/reload                 controllers.Application.reload
+
+# Scenario
+GET     /scenario                    controllers.Scenario.all()
+GET     /scenario/:id                controllers.Scenario.edit(id: Long)
+GET     /scenario/create             controllers.Scenario.create()
+GET     /scenario/update/:id         controllers.Scenario.update(id: Long)
+GET     /scenario/delete/:id         controllers.Scenario.delete(id: Long)
+GET     /scenario/submit             controllers.Scenario.submit()
+
+# Scenario
+GET     /rest/scenario               controllers.ScenarioRest.all(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+POST    /rest/scenario               controllers.ScenarioRest.all(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+GET     /rest/scenario/execute       controllers.ScenarioRest.execute()
+POST    /rest/scenario/execute       controllers.ScenarioRest.execute()
+GET     /rest/scenario/:id/story     controllers.ScenarioRest.story(id: Long)
+GET     /rest/scenario/render        controllers.ScenarioRest.render
+POST    /rest/scenario/render        controllers.ScenarioRest.render
+GET     /rest/scenario/tree          controllers.ScenarioRest.tree(operation: String ?= "get")
+GET    /rest/scenario/create        controllers.ScenarioRest.create
+GET    /rest/scenario/update        controllers.ScenarioRest.update
+GET    /rest/scenario/delete        controllers.ScenarioRest.delete
+
+# Object Entity
+GET     /rest/entity                 controllers.ObjectEntityRest.allEntities(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+POST    /rest/entity                 controllers.ObjectEntityRest.allEntities(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+GET     /rest/entity/tree            controllers.ObjectEntityRest.tree(operation: String ?= "get")
+GET     /rest/entity/tree/:id        controllers.ObjectEntityRest.treeById(id: Long)
+POST    /rest/entity/create          controllers.ObjectEntityRest.create
+POST    /rest/entity/update          controllers.ObjectEntityRest.update
+POST    /rest/entity/delete          controllers.ObjectEntityRest.delete
+
+# Object Field
+GET     /rest/field                  controllers.ObjectFieldRest.allFields(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+POST    /rest/field                  controllers.ObjectFieldRest.allFields(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+POST    /rest/field/update           controllers.ObjectFieldRest.update()
+GET     /rest/field/tree             controllers.ObjectFieldRest.tree(operation: String ?= "get")
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

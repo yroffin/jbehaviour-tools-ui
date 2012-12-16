@@ -1,0 +1,66 @@
+@(jstree: models.bean.jstree.JsTree)
+
+@import play.api.i18n._
+@import views.html.helper._
+
+@**************************************************
+* Generate jsTree html injection
+**************************************************@
+
+@jsid() = {@jstree.getDomid()}
+
+<button id="@jsid()-refresh">Refresh</button>
+<button id="@jsid()-create">Create</button>
+<button id="@jsid()-update">Update</button>
+<button id="@jsid()-delete">Delete</button>
+
+<style>
+    form#@jsid()-form label, input, textarea { display:block; }
+    form#@jsid()-form input.text, textarea.text { margin-bottom:0px; width:95%; }
+    fieldset#@jsid()-fieldset-browser { border:0; width: 250px; height: 300px; }
+    fieldset#@jsid()-fieldset-detail  { border:0; width: 220px; height: 250px; }
+</style>
+
+<fieldset>
+	<legend>@jstree.getName()</legend>
+	<table>
+	<tr>
+	<td>
+    <fieldset>
+    	<legend>@jstree.getName() browser</legend>
+        <fieldset id="@jsid()-fieldset-browser">
+        	<div id="@jsid()"></div>
+        </fieldset>
+	</fieldset>
+	</td>
+	<td>
+	<div id="@jsid()-accordion">
+	<h3>@jstree.getName() data</h3>
+	<div>
+        <fieldset id="@jsid()-fieldset-detail">
+	        <label for="objectid">Id</label>
+	        <input type="text" name="@jsid()-form-id" id="@jsid()-form-id" readonly="readonly" class="text ui-widget-content ui-corner-all" /><br>
+	        <label for="fatherid">Owner</label>
+	        <input type="text" name="@jsid()-form-father" id="@jsid()-form-father" readonly="readonly" class="text ui-widget-content ui-corner-all" /><br>
+	        <label for="classid">Class</label>
+	        <input type="text" name="@jsid()-form-class" id="@jsid()-form-class" readonly="readonly" class="text ui-widget-content ui-corner-all" /><br>
+	        <label for="classid">Children</label>
+	        <input type="text" name="@jsid()-form-children" id="@jsid()-form-children" readonly="readonly" class="text ui-widget-content ui-corner-all" /><br>
+	        <label for="classid">Values</label>
+	        <input type="text" name="@jsid()-form-values" id="@jsid()-form-values" readonly="readonly" class="text ui-widget-content ui-corner-all" /><br>
+		</fieldset>
+    </div>
+	<h3>@jstree.getName() data</h3>
+	<div>
+	    <fieldset id="@jsid()-fieldset-detail">
+		    <label for="name">Name</label>
+		    <input type="text" name="@jsid()-form-name" id="@jsid()-form-name" value="" class="text ui-widget-content ui-corner-all" /><br>
+		    <label for="description">Description</label>
+			<textarea id="@jsid()-form-description" rows="5" class="text ui-widget-content ui-corner-all"></textarea>
+		</fieldset>
+	</div>
+    </div>
+	</td>
+	</tr>
+	</table>
+</fieldset>

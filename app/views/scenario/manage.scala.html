@@ -1,0 +1,42 @@
+@(myForm: Form[models.bean.core.ScenarioBean])
+
+@import helper._
+@import helper.twitterBootstrap._
+@import helper._
+
+@main(Messages("step.update")) {
+	
+	@helper.form(action = routes.Scenario.submit, 'class -> "form-horizontal") {
+
+		<input type="hidden" name="id"  value="@myForm("id").value">
+
+        <fieldset>
+        <legend>@Messages("scenario.legend")</legend>
+
+        @inputText(
+        	field = myForm("name"), 
+        	args = '_label -> Messages("scenario.name"), 
+            '_error -> myForm.globalError,
+        	'class -> "input",
+        	'placeholder -> Messages("scenario.name.placeholder")
+        )
+        
+        @textarea(
+        	field = myForm("description"), 
+            args = '_label -> Messages("scenario.description"), 
+            '_error -> myForm.globalError,
+        	'class -> "textarea",
+        	'placeholder -> Messages("scenario.description.placeholder"),
+        	'rows -> 3, 
+        	'cols -> 50
+            )
+        
+        </fieldset>
+        
+	    <div class="actions">
+	    	<input type="submit" class="btn btn-primary" value="@Messages("action.validate")">
+	    	<a href="@routes.Scenario.all()" class="btn">@Messages("action.cancel")</a>
+	    </div>
+	}
+}
+      
