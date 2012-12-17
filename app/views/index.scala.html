@@ -68,7 +68,7 @@
 		 * #param data, the story to execute
 		 */
 		function renderScript() {
-			wsCall( "rest/scenario/render",
+			wsCall( "/rest/scenario/render",
 					{storyId: -1, rawScript: $('#script-editor-container').val()},
 					function(node){
 			        	$('#script-validator-container').html(node.renderedScript);
@@ -82,7 +82,7 @@
 		 * #param data, the story to execute
 		 */
 		function executeScript() {
-			wsCall( "rest/scenario/execute",
+			wsCall( "/rest/scenario/execute",
 					{storyId: -1, rawScript: $('#script-editor-container').val()},
 					function(node){
 			        	$('#script-validator-container').html(node.renderedScript);

@@ -1,11 +1,15 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import org.jbehaviour.report.IBehaviourReportRun;
+import org.jbehaviour.xref.IBehaviourXRef;
+import org.jbehaviour.xref.IBehaviourXRefSuite;
 
 import play.libs.Json;
 import play.mvc.BodyParser;   
@@ -84,16 +88,28 @@ public class ScenarioRest extends Controller {
 			 * render from text
 			 */
 			Logger.info("Execute story from direct text");
-			klass.setRenderedScript(objectFinderApp.render(klass.getRawScript(),objectFinderApp));
+			klass.setRenderedScript(klass.getRawScript());
 		}
 		/**
 		 * execute this story with jBehave
 		 */
-		Object output = scenarioApp.execute(klass.getRenderedScript());
+		IBehaviourXRef output = scenarioApp.execute(klass.getRenderedScript());
+		
 		/**
-		 * TODO
-		 * klass.setRenderedStdout(((Object) output).getConsoleOutput());
+		 * Stdout
 		 */
+		StringBuilder sbOutput = new StringBuilder();
+		for(String key : output.getRunsByScenario().keySet()) {
+			IBehaviourXRefSuite local = output.getRunsByScenario().get(key);
+			for(IBehaviourReportRun run : local.getRuns()) {
+				try {
+					sbOutput.append(run.getStdoutAsString());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		klass.setRenderedStdout(sbOutput.toString());
 		return ok(Json.toJson(klass));
 	}
 

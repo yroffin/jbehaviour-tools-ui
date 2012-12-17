@@ -1,6 +1,14 @@
 package service.application;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
+
+import org.jbehaviour.exception.JBehaviourParsingError;
+import org.jbehaviour.exception.JBehaviourRuntimeError;
+import org.jbehaviour.impl.JBehaviourLauncher;
+import org.jbehaviour.xref.IBehaviourXRef;
 
 import play.Logger;
 
@@ -71,11 +79,37 @@ public class ScenarioApp {
 	 * @param id
 	 * @return
 	 */
-	public Object execute(String story) {
-		/**
-		 * TODO
-		 * execute this story
-		 */
+	public IBehaviourXRef execute(String story) {
+		File localFile = null;
+		try {
+			localFile = File.createTempFile("play#", ".story");
+			localFile.deleteOnExit();
+		} catch (IOException e) {
+			/**
+			 * TODO
+			 * better exception handle ?
+			 */
+			e.printStackTrace();
+		}
+		
+		Logger.info("Running : " + localFile.getAbsolutePath());
+		try {
+			FileWriter writer = new FileWriter(localFile);
+			writer.write(story);
+			writer.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			JBehaviourLauncher launcher = new JBehaviourLauncher();
+			launcher.registerAndExecute(localFile);
+			return launcher.getEnv().getXRef();
+		} catch (JBehaviourParsingError e) {
+			e.printStackTrace();
+		} catch (JBehaviourRuntimeError e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 }
