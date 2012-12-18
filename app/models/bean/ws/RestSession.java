@@ -1,7 +1,6 @@
 package models.bean.ws;
 
-import models.bean.core.ObjectEntityBean;
-import models.bean.core.ScenarioBean;
+import models.bean.core.LocalStoryBean;
 import models.bean.jstree.JsTreeDataMeta;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -22,9 +21,7 @@ public class RestSession {
 	 * data part
 	 */
 	@JsonProperty()
-	private ScenarioBean scenarioBean;
-	@JsonProperty()
-	private ObjectEntityBean entityBean;
+	private LocalStoryBean LocalStoryBean;
 	@JsonProperty()
 	private JsTreeDataMeta metaclass;
 
@@ -33,8 +30,8 @@ public class RestSession {
 		return "RestSession [rawScript=" + rawScript + ", storyId=" + storyId
 				+ ", renderedScript=" + renderedScript + ", renderedStdout="
 				+ renderedStdout + ", renderedStderr=" + renderedStderr
-				+ ", scenarioBean=" + scenarioBean + ", entityBean="
-				+ entityBean + ", metaclass=" + metaclass + "]";
+				+ ", LocalStoryBean=" + LocalStoryBean + ", metaclass="
+				+ metaclass + "]";
 	}
 
 	public int getStoryId() {
@@ -78,12 +75,12 @@ public class RestSession {
 	}
 
 	
-	public ScenarioBean getScenarioBean() {
-		return scenarioBean;
+	public LocalStoryBean getLocalStoryBean() {
+		return LocalStoryBean;
 	}
 
-	public void setScenarioBean(ScenarioBean scenarioBean) {
-		this.scenarioBean = scenarioBean;
+	public void setLocalStoryBean(LocalStoryBean LocalStoryBean) {
+		this.LocalStoryBean = LocalStoryBean;
 	}
 
 	public JsTreeDataMeta getMetaclass() {
@@ -93,13 +90,4 @@ public class RestSession {
 	public void setMetaclass(JsTreeDataMeta metaclass) {
 		this.metaclass = metaclass;
 	}
-
-	public ObjectEntityBean getEntityBean() {
-		return entityBean;
-	}
-
-	public void setEntityBean(ObjectEntityBean entityBean) {
-		this.entityBean = entityBean;
-	}
-	
 }

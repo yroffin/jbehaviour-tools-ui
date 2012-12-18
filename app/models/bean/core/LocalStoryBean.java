@@ -7,7 +7,7 @@ import play.data.validation.Constraints.Required;
 
 import models.bean.DefaultBean;
 
-public class ScenarioBean extends DefaultBean {
+public class LocalStoryBean extends DefaultBean {
 	public String getName() {
 		return name;
 	}
@@ -18,7 +18,7 @@ public class ScenarioBean extends DefaultBean {
 
 	@Override
 	public String toString() {
-		return "ScenarioBean [name=" + name + ", description=" + description
+		return "LocalStoryBean [name=" + name + ", description=" + description
 				+ ", lastUpdate=" + lastUpdate + "]";
 	}
 

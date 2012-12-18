@@ -4,21 +4,21 @@ import java.util.Date;
 
 import play.db.ebean.Model.Finder;
 
-import models.bean.core.ScenarioBean;
-import models.entity.core.Scenario;
+import models.bean.core.LocalStoryBean;
+import models.entity.core.LocalStory;
 import service.CrudService;
 
-public class ScenarioSvc extends CrudService<Scenario, ScenarioBean> {
+public class LocalStorySvc extends CrudService<LocalStory, LocalStoryBean> {
 	/**
 	 * create the default finder
 	 */
-	public ScenarioSvc() {
-		find = new Finder<Long, Scenario>(Long.class,Scenario.class);
-		persistent = Scenario.class;
-		bean = ScenarioBean.class;
+	public LocalStorySvc() {
+		find = new Finder<Long, LocalStory>(Long.class,LocalStory.class);
+		persistent = LocalStory.class;
+		bean = LocalStoryBean.class;
 	}
 	@Override
-	public ScenarioBean updateVo(ScenarioBean vo, Scenario entity) {
+	public LocalStoryBean updateVo(LocalStoryBean vo, LocalStory entity) {
 		vo.setName(entity.name);
 		vo.setLastUpdate(new Date());
 		vo.setDescription(entity.description);
@@ -26,7 +26,7 @@ public class ScenarioSvc extends CrudService<Scenario, ScenarioBean> {
 		return vo;
 	}
 	@Override
-	public Scenario updateEntity(ScenarioBean vo, Scenario entity) {
+	public LocalStory updateEntity(LocalStoryBean vo, LocalStory entity) {
 		entity.name = vo.getName();
 		entity.description = vo.getDescription();
 		entity.lastUpdate = vo.getLastUpdate();

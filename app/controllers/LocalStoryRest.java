@@ -15,32 +15,29 @@ import play.libs.Json;
 import play.mvc.BodyParser;   
 import play.mvc.Result;
 
-import models.bean.core.ObjectFieldBean;
-import models.bean.core.ScenarioBean;
+import models.bean.core.LocalStoryBean;
 import models.bean.jstree.JsTreeData;
 import models.bean.jstree.JsTreeDataMeta;
 import models.bean.ws.RestSession;
 import play.Logger;
 import play.mvc.*;
 import service.Spring;
-import service.application.ObjectFinderApp;
-import service.application.ScenarioApp;
+import service.application.LocalStoryApp;
 
-import views.html.scenario.*;
+import views.html.localStory.*;
 
-public class ScenarioRest extends Controller {
-	final static ScenarioApp scenarioApp = Spring.getBeanOfType(ScenarioApp.class);
-	final static ObjectFinderApp objectFinderApp = Spring.getBeanOfType(ObjectFinderApp.class);
+public class LocalStoryRest extends Controller {
+	final static LocalStoryApp localStoryApp = Spring.getBeanOfType(LocalStoryApp.class);
 
 	/**
-	 * render all scenario
+	 * render all LocalStory
 	 * @return
 	 */
 	public static Result all(Long jtStartIndex, Long jtPageSize, String jtSorting) {
 		ObjectNode result = Json.newObject();
 		result.put("Result", "OK");
 		ArrayNode array = result.putArray("Records");
-		for(ScenarioBean item : scenarioApp.scenarios()) {
+		for(LocalStoryBean item : localStoryApp.LocalStorys()) {
 			ObjectNode sub = Json.newObject();
 			sub.put("Id", item.getId());
 			sub.put("Name", item.getName());
@@ -61,12 +58,12 @@ public class ScenarioRest extends Controller {
 		 * render script
 		 */
 		RestSession klass = Json.fromJson(request().body().asJson(),RestSession.class);
-		klass.setRenderedScript(objectFinderApp.render(klass.getRawScript(),objectFinderApp));
+		klass.setRenderedScript(klass.getRawScript());
 		return ok(Json.toJson(klass));
 	}
 
 	/**
-	 * REST Api for executing a scenario
+	 * REST Api for executing a LocalStory
 	 * @param id
 	 * @return
 	 */
@@ -77,23 +74,17 @@ public class ScenarioRest extends Controller {
 		 * render script
 		 */
 		RestSession klass = Json.fromJson(request().body().asJson(),RestSession.class);
-		if(klass.getStoryId() != -1) {
-			/**
-			 * get story from scenario id
-			 */
-			Logger.info("Execute story from id "+klass.getStoryId());
-			klass.setRenderedScript(objectFinderApp.render(klass.getStoryId(),objectFinderApp));
-		} else {
-			/**
-			 * render from text
-			 */
-			Logger.info("Execute story from direct text");
-			klass.setRenderedScript(klass.getRawScript());
-		}
+
+		/**
+		 * render from text
+		 */
+		Logger.info("Execute story from direct text");
+		klass.setRenderedScript(klass.getRawScript());
+		
 		/**
 		 * execute this story with jBehave
 		 */
-		IBehaviourXRef output = scenarioApp.execute(klass.getRenderedScript());
+		IBehaviourXRef output = localStoryApp.execute(klass.getRenderedScript());
 		
 		/**
 		 * Stdout
@@ -114,21 +105,21 @@ public class ScenarioRest extends Controller {
 	}
 
 	/**
-	 * REST Api for executing a scenario
+	 * REST Api for executing a LocalStory
 	 * @param id
 	 * @return
 	 */
 	@BodyParser.Of(play.mvc.BodyParser.Json.class)
 	public static Result story(Long id) {
 		Logger.info("story ["+id+"]");
-		ScenarioBean scenario = scenarioApp.scenarioById(id);
+		LocalStoryBean LocalStory = localStoryApp.LocalStoryById(id);
 		/**
 		 * find the story
 		 */
 		ObjectNode result = Json.newObject();
 		result.put("Result", "OK");
-		result.put("Name", scenario.getName());
-		result.put("Story", scenario.getStory());
+		result.put("Name", LocalStory.getName());
+		result.put("Story", LocalStory.getStory());
 		return ok(result);
 	}
 
@@ -147,13 +138,13 @@ public class ScenarioRest extends Controller {
 	 * @return
 	 */
 	public static Result treeById(Long id) {
-		List<ScenarioBean> allScenarios = scenarioApp.scenarios();
+		List<LocalStoryBean> allLocalStorys = localStoryApp.LocalStorys();
 
 		Set<String> directory = new HashSet<String>();
 		/**
 		 * find all first letter of all fields
 		 */
-		for(ScenarioBean item : allScenarios) {
+		for(LocalStoryBean item : allLocalStorys) {
 			directory.add(item.getName().substring(0,1));
 		}
 
@@ -177,7 +168,7 @@ public class ScenarioRest extends Controller {
 
 		index = 0;
 		for(String prefix : directory) {
-			for(ScenarioBean item : allScenarios) {
+			for(LocalStoryBean item : allLocalStorys) {
 				if(item.getName().startsWith(prefix)) {
 					arrayOfKlass[index].addChild(
 							new JsTreeData(
@@ -210,9 +201,9 @@ public class ScenarioRest extends Controller {
 		RestSession klass = Json.fromJson(request().body().asJson(),RestSession.class);
 		Logger.info("create : "+klass);
 		/**
-		 * insert this new step in current scenario (id)
+		 * insert this new step in current LocalStory (id)
 		 */
-		//scenarioApp.insert(id);
+		//LocalStoryApp.insert(id);
 		ObjectNode result = Json.newObject();
 		result.put("text", "essai");
 		return ok(result);
@@ -244,6 +235,6 @@ public class ScenarioRest extends Controller {
 	 * @return
 	 */
 	public static Result delete(Long id) {
-		return ok(all.render(scenarioApp.scenarios()));
+		return ok(all.render(localStoryApp.LocalStorys()));
 	}
 }

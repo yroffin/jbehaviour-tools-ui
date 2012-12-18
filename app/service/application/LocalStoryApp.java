@@ -11,31 +11,31 @@ import org.jbehaviour.impl.JBehaviourLauncher;
 import org.jbehaviour.xref.IBehaviourXRef;
 
 import play.Logger;
+import service.business.LocalStorySvc;
 
-import models.bean.core.ScenarioBean;
-import service.business.ScenarioSvc;
+import models.bean.core.LocalStoryBean;
 
-public class ScenarioApp {
+public class LocalStoryApp {
 	/**
 	 * spring injection
 	 */
-	private ScenarioSvc scenarioSvc;
-	public void setScenarioSvc(ScenarioSvc scenarioSvc) {
-		this.scenarioSvc = scenarioSvc;
+	private LocalStorySvc localStorySvc;
+	public void setLocalStorySvc(LocalStorySvc LocalStorySvc) {
+		this.localStorySvc = LocalStorySvc;
 	}
 	/**
-	 * create a new scenario
-	 * @param scenarioBean
+	 * create a new LocalStory
+	 * @param LocalStoryBean
 	 */
-	public void create(ScenarioBean scenarioBean) {
-		scenarioSvc.createElement(scenarioBean);
+	public void create(LocalStoryBean LocalStoryBean) {
+		localStorySvc.createElement(LocalStoryBean);
 	}
 	/**
 	 * update
-	 * @param scenarioBean
+	 * @param LocalStoryBean
 	 */
-	public void update(ScenarioBean scenarioBean) {
-		scenarioSvc.updateElement(scenarioBean);
+	public void update(LocalStoryBean LocalStoryBean) {
+		localStorySvc.updateElement(LocalStoryBean);
 	}
 	/**
 	 * find by its id
@@ -43,15 +43,15 @@ public class ScenarioApp {
 	 * @param b
 	 * @return
 	 */
-	public ScenarioBean scenarioById(Long id) {
-		return scenarioSvc.findElementById(id, false);
+	public LocalStoryBean LocalStoryById(Long id) {
+		return localStorySvc.findElementById(id, false);
 	}
 	/**
 	 * find all element
 	 * @return
 	 */
-	public List<ScenarioBean> scenarios() {
-		return scenarioSvc.findAllElement();
+	public List<LocalStoryBean> LocalStorys() {
+		return localStorySvc.findAllElement();
 	}
 	/**
 	 * insert a new step

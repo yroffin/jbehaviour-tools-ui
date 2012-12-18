@@ -11,7 +11,7 @@ object ApplicationBuild extends Build {
       "org.springframework"    %    "spring-context"    %    "3.0.7.RELEASE",
       "org.springframework"    %    "spring-core"       %    "3.0.7.RELEASE",
       "org.springframework"    %    "spring-beans"      %    "3.0.7.RELEASE",
-      "org.jbehaviour-tools"   %    "jbehaviour-engine" %    "0.0.1-SNAPSHOT"
+      "com.github.yroffin"     %    "jbehaviour-engine" %    "0.0.1-SNAPSHOT"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(

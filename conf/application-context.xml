@@ -11,26 +11,12 @@
 
 
 	<!-- Application injection -->
-    <bean id="scenarioApp" class="service.application.ScenarioApp">
-    	<property name="scenarioSvc" ref="scenarioSvc"></property>
-    </bean>
-
-    <bean id="objectEntityApp" class="service.application.ObjectEntityApp">
-    	<property name="objectEntitySvc" ref="objectEntitySvc"></property>
-    	<property name="objectFieldSvc" ref="objectFieldSvc"></property>
-    </bean>
-
-    <bean id="objectFinderApp" class="service.application.ObjectFinderApp">
-    	<property name="objectEntitySvc" ref="objectEntitySvc"></property>
-    	<property name="objectFieldSvc" ref="objectFieldSvc"></property>
-    	<property name="scenarioSvc" ref="scenarioSvc"></property>
+    <bean id="localStoryApp" class="service.application.LocalStoryApp">
+    	<property name="localStorySvc" ref="localStorySvc"></property>
     </bean>
 
 	<!-- Business injection -->
-    <bean id="scenarioSvc" class="service.business.ScenarioSvc" />
-    <bean id="objectEntitySvc" class="service.business.ObjectEntitySvc" />
-    <bean id="objectFieldSvc" class="service.business.ObjectFieldSvc" />
-    <bean id="objectFieldValueSvc" class="service.business.ObjectFieldValueSvc" />
+    <bean id="localStorySvc" class="service.business.LocalStorySvc" />
 
 	<!-- Entity injection -->
 
