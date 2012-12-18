@@ -6,6 +6,7 @@
 		<textarea id="edit-dialog-story" cols="80" rows="20">
 		</textarea>
 	</div>
+
 	<div id="report-dialog" title="Report">
 		<textarea id="report-dialog-story" cols="80" rows="20">
 		</textarea>
@@ -37,55 +38,35 @@
 		 * document initialization
 		 */
 		$(document).ready(function () {
-			$('#edit-dialog').dialog({width: 750, autoOpen: false});
+			$('#edit-dialog').dialog({width: 900, autoOpen: false});
 			$('#edit-dialog-story').markItUp('');
-			$('#report-dialog').dialog({width: 750, autoOpen: false, modal: true});
+			$('#report-dialog').dialog({width: 900, autoOpen: false, modal: true});
 			$('#report-dialog-story').markItUp('');
 
 			/**
 			 * script editor part
 			 */
 			$('#script-editor-container').markItUp('');
-			$('#script-validator-container').markItUp('');
 			$('#script-validator-output').markItUp('');
-			$('#accordion').accordion();
+			$('#tabs').tabs();
 			
-			$( "#render-script" ).button().click(function( event ) {renderScript();});
 			$( "#execute-script" ).button().click(function( event ) {executeScript();});
-			$( "#render-reload" ).button().click(function( event ) {renderReload();});
+			$( "#execute-reload" ).button().click(function( event ) {renderReload();});
 			
 			/**
 			 * dialog part
 			 */
-			$( "#dialog-scenarios" ).dialog({ width: 650, height: 450 });
-			$( "#dialog-entities" ).dialog({ width: 650, height: 450 });
-			$( "#dialog-fields" ).dialog({ width: 650, height: 450 });
-			$( "#dialog-scripts" ).dialog({ width: 700, height: 500 });
+			$( "#dialog-scripts" ).dialog({ width: 800, height: 550 });
 		});
-
-		/**
-		 * call a story, and render it
-		 * #param data, the story to execute
-		 */
-		function renderScript() {
-			wsCall( "/rest/scenario/render",
-					{storyId: -1, rawScript: $('#script-editor-container').val()},
-					function(node){
-			        	$('#script-validator-container').html(node.renderedScript);
-			        	$('#script-validator-output').html(node.renderedStdout);
-			        }
-			);
-		}
 
 		/**
 		 * call a story, and execute it
 		 * #param data, the story to execute
 		 */
 		function executeScript() {
-			wsCall( "/rest/scenario/execute",
+			wsCall( "/rest/story/execute",
 					{storyId: -1, rawScript: $('#script-editor-container').val()},
 					function(node){
-			        	$('#script-validator-container').html(node.renderedScript);
 			        	$('#script-validator-output').html(node.renderedStdout);
 			        }
 			);
@@ -99,7 +80,7 @@
 			wsCall( "/rest/reload",
 					{},
 					function(node){
-			        	$('#script-validator-container').html("Database reloaded ...");
+			        	$('#script-validator-output').html("Database reloaded ...");
 			        }
 			);
 		}
@@ -114,7 +95,7 @@
 			 */
 			$.ajax({
 		        type: 'GET',
-		        url: $(location).attr('href') + 'rest/scenario/' + data.record.Id + '/execute',
+		        url: $(location).attr('href') + 'rest/story/' + data.record.Id + '/execute',
 		        dataType: "json",
 		        success: function(data){
 		        	$('#report-dialog').dialog('open');
@@ -133,7 +114,7 @@
 			 */
 			$.ajax({
 		        type: 'GET',
-		        url: $(location).attr('href') + 'rest/scenario/' + data.record.Id + '/story',
+		        url: $(location).attr('href') + 'rest/story/' + data.record.Id + '/story',
 		        dataType: "json",
 		        success: function(data){
 		        	$('#edit-dialog').dialog('open');
@@ -141,35 +122,22 @@
 		        }
 		    });
 		}
-
-		/**
-		 * script injection
-		 */
-		@helper.jsTree(params.getJsTreeParams("Scenarios"))
-		@helper.jsTree(params.getJsTreeParams("Entities"))
-		@helper.jsTree(params.getJsTreeParams("Fields"))
 	</script>
 
-    <div id="dialog-scenarios" title="Scenarios browser">
-		@helper.jsTreeHtml(params.getJsTreeParams("Scenarios"))
-    </div>
-    <div id="dialog-entities" title="Entities browser">
-		@helper.jsTreeHtml(params.getJsTreeParams("Entities"))
-    </div>
-    <div id="dialog-fields" title="Fields browser">
-		@helper.jsTreeHtml(params.getJsTreeParams("Fields"))
-    </div>
     <div id="dialog-scripts" title="Script editor">
-    	<button id="render-script">Render</button>
     	<button id="execute-script">Execute</button>
-    	<button id="render-reload">Reload</button>
-    	<div id="accordion">
-   		<h3>Raw script</h3>
-		<div><textarea id="script-editor-container" cols="80" rows="10">$context.byName("Entity de test #10")</textarea></div>
-   		<h3>Rendered script</h3>
-		<div><textarea id="script-validator-container" cols="80" rows="10"></textarea></div>
-   		<h3>Output</h3>
-		<div><textarea id="script-validator-output" cols="80" rows="10"></textarea></div>
+    	<button id="execute-reload">Reload</button>
+    	<div id="tabs">
+    	<ul>
+	        <li><a href="#tabs-1">Raw script</a></li>
+	        <li><a href="#tabs-2">Output</a></li>
+    	</ul>
+		<div id="tabs-1">
+			<textarea id="script-editor-container" cols="70" rows="8">$context.byName("Entity de test #10")</textarea>
+		</div>
+		<div id="tabs-2">
+			<textarea id="script-validator-output" cols="70" rows="8"></textarea>
+		</div>
 		</div>
     </div>
 }
