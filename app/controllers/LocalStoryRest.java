@@ -1,11 +1,14 @@
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.jbehaviour.report.IBehaviourReportRun;
 import org.jbehaviour.xref.IBehaviourXRef;
@@ -16,6 +19,7 @@ import play.mvc.BodyParser;
 import play.mvc.Result;
 
 import models.bean.core.LocalStoryBean;
+import models.bean.datatable.JsDataTable;
 import models.bean.jstree.JsTreeData;
 import models.bean.jstree.JsTreeDataMeta;
 import models.bean.ws.RestSession;
@@ -29,21 +33,31 @@ import views.html.localStory.*;
 public class LocalStoryRest extends Controller {
 	final static LocalStoryApp localStoryApp = Spring.getBeanOfType(LocalStoryApp.class);
 
+	public static Result scan(){
+		Logger.info("finding local files ...");
+		Collection<File> all = new ArrayList<File>();
+		findFiles(new File("data"), all);
+	    System.out.println(all);
+		JsonNode result = Json.toJson(new JsDataTable());
+	    return ok(result);
+	}
+
+	static void findFiles(File file, Collection<File> all) {
+	    File[] children = file.listFiles();
+	    if (children != null) {
+	        for (File child : children) {
+	            all.add(child);
+	            findFiles(child, all);
+	        }
+	    }
+	}
+
 	/**
 	 * render all LocalStory
 	 * @return
 	 */
-	public static Result all(Long jtStartIndex, Long jtPageSize, String jtSorting) {
-		ObjectNode result = Json.newObject();
-		result.put("Result", "OK");
-		ArrayNode array = result.putArray("Records");
-		for(LocalStoryBean item : localStoryApp.LocalStorys()) {
-			ObjectNode sub = Json.newObject();
-			sub.put("Id", item.getId());
-			sub.put("Name", item.getName());
-			sub.put("Description", item.getDescription());
-			array.add(sub);
-		}
+	public static Result table() {
+		JsonNode result = Json.toJson(new JsDataTable());
 	    return ok(result);
 	}
 	

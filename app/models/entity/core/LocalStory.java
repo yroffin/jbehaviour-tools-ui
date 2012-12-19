@@ -21,7 +21,7 @@ public class LocalStory extends DefaultModel {
 
 	@Override
 	public String toString() {
-		return "Scenario [name=" + name + ", description=" + description
+		return "LocalStory [name=" + name + ", description=" + description
 				+ ", story=" + story + "]";
 	}
 }

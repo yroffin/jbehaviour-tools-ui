@@ -8,8 +8,10 @@ GET     /rest/reload                 controllers.Application.reload
 POST    /rest/reload                 controllers.Application.reload
 
 # LocalStory
-GET     /rest/story               controllers.LocalStoryRest.all(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
-POST    /rest/story               controllers.LocalStoryRest.all(jtStartIndex: Long, jtPageSize: Long, jtSorting: String)
+GET     /rest/story/scan          controllers.LocalStoryRest.scan()
+POST    /rest/story/scan          controllers.LocalStoryRest.scan()
+GET     /rest/story/table         controllers.LocalStoryRest.table()
+POST    /rest/story/table         controllers.LocalStoryRest.table()
 GET     /rest/story/execute       controllers.LocalStoryRest.execute()
 POST    /rest/story/execute       controllers.LocalStoryRest.execute()
 GET     /rest/story/:id/story     controllers.LocalStoryRest.story(id: Long)

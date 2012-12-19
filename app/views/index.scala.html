@@ -48,15 +48,23 @@
 			 */
 			$('#script-editor-container').markItUp('');
 			$('#script-validator-output').markItUp('');
-			$('#tabs').tabs();
 			
 			$( "#execute-script" ).button().click(function( event ) {executeScript();});
 			$( "#execute-reload" ).button().click(function( event ) {renderReload();});
+			$( "#execute-scan" ).button().click(function( event )   {scan();});
 			
 			/**
 			 * dialog part
 			 */
-			$( "#dialog-scripts" ).dialog({ width: 800, height: 550 });
+			$( "#dialog-output" ).dialog({ width: 750, height: 450 });
+			$( "#dialog-script" ).dialog({ width: 750, height: 470 });
+			$( "#tabs" ).tabs();
+			
+			$('#example').dataTable( {
+		        "bProcessing": true,
+		        "bJQueryUI": true,
+		        "sAjaxSource": '/rest/story/table'
+		    } );
 		});
 
 		/**
@@ -81,6 +89,19 @@
 					{},
 					function(node){
 			        	$('#script-validator-output').html("Database reloaded ...");
+			        }
+			);
+		}
+
+		/**
+		 * call a story, and execute it
+		 * #param data, the story to execute
+		 */
+		function scan() {
+			wsCall( "/rest/story/scan",
+					{},
+					function(node){
+			        	$('#script-validator-output').html("Files scanned ...");
 			        }
 			);
 		}
@@ -124,20 +145,55 @@
 		}
 	</script>
 
-    <div id="dialog-scripts" title="Script editor">
+    <div id="dialog-output" title="Output console">
+		<textarea id="script-validator-output" cols="70" rows="8"></textarea>
+    </div>
+
+    <div id="dialog-script" title="Script editor">
+		<div id="tabs">
+		    <ul>
+		        <li><a href="#tabs-1">Story browser</a></li>
+		        <li><a href="#tabs-2">Story editor</a></li>
+		    </ul>
+		    <div id="tabs-1">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="example">
+	<thead>
+		<tr>
+			<th width="20%">Path</th>
+			<th width="25%">Name</th>
+			<th width="25%">Size</th>
+			<th width="15%">Created</th>
+			<th width="15%">Last update</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+	</tbody>
+	<tfoot>
+		<tr>
+			<th>Path</th>
+			<th>Name</th>
+			<th>Size</th>
+			<th>Created</th>
+			<th>Last update</th>
+		</tr>
+	</tfoot>
+</table>
+		    </div>
+		    <div id="tabs-2">
     	<button id="execute-script">Execute</button>
     	<button id="execute-reload">Reload</button>
-    	<div id="tabs">
-    	<ul>
-	        <li><a href="#tabs-1">Raw script</a></li>
-	        <li><a href="#tabs-2">Output</a></li>
-    	</ul>
-		<div id="tabs-1">
-			<textarea id="script-editor-container" cols="70" rows="8">$context.byName("Entity de test #10")</textarea>
-		</div>
-		<div id="tabs-2">
-			<textarea id="script-validator-output" cols="70" rows="8"></textarea>
-		</div>
+    	<button id="execute-scan">Scan</button>
+		<textarea id="script-editor-container" cols="70" rows="8">Feature: Launch a story sample for testing json object
+  In order to test this feature
+  As an explicit system actor
+  I want to verify this behaviour
+  Register system with 'org.jbehaviour.plugins.system.SystemSteps' plugin
+  Declare ref002 as String "some string 002 to display"
+
+  Scenario: Verify this sample
+    Given print object $ref002</textarea>
+		    </div>
 		</div>
     </div>
 }

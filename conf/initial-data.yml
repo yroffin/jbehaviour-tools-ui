@@ -2,14 +2,14 @@
 # and then load them using Yaml.load("data.yml")
 
 scenarios:
-- &scenario10 !!models.entity.core.Scenario {id: 10, name: "Scenario de test scenario#10", description: "default description", story: "Given create local resource 'file://u:/tmp' identified by 'localhost'\nAnd create ssh resource 'ssh://Yannick:nathalie@192.168.1.130' identified by 'gandalf'\nWhen open resource 'gandalf'\nThen check if 'screenshot.png' exist on 'localhost'\nThen check if '/tmp/screenshot.png' exist on 'gandalf'\n", lastUpdate: 2007-01-02}
-- &scenario20 !!models.entity.core.Scenario {id: 20, name: "Scenario de test scenario#20", description: "default description", story: "Given a new session\nAnd also\nWhen i go to 'http://www.google.fr'\nThen the url must like 'http://www.google.fr'\nThen close\n", lastUpdate: 2007-01-02}
-- &scenario30 !!models.entity.core.Scenario {id: 30, name: "Scenario de test scenario#30", description: "default description", story: "", lastUpdate: 2007-01-02}
+- &story10 !!models.entity.core.Scenario {id: 10, name: "Scenario de test scenario#10", description: "default description", story: "Given create local resource 'file://u:/tmp' identified by 'localhost'\nAnd create ssh resource 'ssh://Yannick:nathalie@192.168.1.130' identified by 'gandalf'\nWhen open resource 'gandalf'\nThen check if 'screenshot.png' exist on 'localhost'\nThen check if '/tmp/screenshot.png' exist on 'gandalf'\n", lastUpdate: 2007-01-02}
+- &story20 !!models.entity.core.Scenario {id: 20, name: "Scenario de test scenario#20", description: "default description", story: "Given a new session\nAnd also\nWhen i go to 'http://www.google.fr'\nThen the url must like 'http://www.google.fr'\nThen close\n", lastUpdate: 2007-01-02}
+- &story30 !!models.entity.core.Scenario {id: 30, name: "Scenario de test scenario#30", description: "default description", story: "", lastUpdate: 2007-01-02}
 
 level10:
-- &child101 !!models.entity.core.ObjectEntity {id: 101, name: "Child de test #101", description: "default description\nligne suivante 1", lastUpdate: 2007-01-02}
-- &child102 !!models.entity.core.ObjectEntity {id: 102, name: "Child de test #102", description: "default description\nligne suivante 2", lastUpdate: 2007-01-02}
-- &child103 !!models.entity.core.ObjectEntity {id: 103, name: "Child de test #103", description: "default description\nligne suivante 3", lastUpdate: 2007-01-02}
+- &child101 !!models.entity.core.ObjectNode {id: 101, name: "Child de test #101", description: "default description\nligne suivante 1", lastUpdate: 2007-01-02}
+- &child102 !!models.entity.core.ObjectNode {id: 102, name: "Child de test #102", description: "default description\nligne suivante 2", lastUpdate: 2007-01-02}
+- &child103 !!models.entity.core.ObjectNode {id: 103, name: "Child de test #103", description: "default description\nligne suivante 3", lastUpdate: 2007-01-02}
 
 level20:
 - &child201 !!models.entity.core.ObjectEntity {id: 201, name: "Child de test #201", description: "default description", lastUpdate: 2007-01-02}
