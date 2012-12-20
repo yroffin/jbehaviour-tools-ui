@@ -8,6 +8,8 @@ GET     /rest/reload                 controllers.Application.reload
 POST    /rest/reload                 controllers.Application.reload
 
 # LocalStory
+GET     /rest/story/get           controllers.LocalStoryRest.get()
+POST    /rest/story/get           controllers.LocalStoryRest.get()
 GET     /rest/story/scan          controllers.LocalStoryRest.scan()
 POST    /rest/story/scan          controllers.LocalStoryRest.scan()
 GET     /rest/story/table         controllers.LocalStoryRest.table()

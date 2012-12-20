@@ -16,6 +16,7 @@ import play.Logger;
 import play.Play;
 import play.db.jpa.Transactional;
 import service.Spring;
+import service.application.LocalStoryApp;
 
 public class Global extends GlobalSettings {
 	@Override
@@ -26,10 +27,18 @@ public class Global extends GlobalSettings {
 	@Override
 	public void onStart(Application app){
 		initialize(app);
-		initializeData(app);
+		try {
+			initializeData(app);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	} 
 	@Transactional
-	public void initializeData(Application app){
+	public void initializeData(Application app) throws Exception{
+		LocalStoryApp localStoryApp = Spring.getBeanOfType(LocalStoryApp.class);
+		if(!localStoryApp.initialize(Play.application().configuration())) {
+			throw new Exception("Error, while initializing ...");
+		}
 	}
 
 	/** Configuration keys **/

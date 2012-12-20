@@ -16,6 +16,12 @@ public class RestSession {
 	private String renderedStdout;
 	@JsonProperty()
 	private String renderedStderr;
+	@JsonProperty()
+	private String path;
+	@JsonProperty()
+	private String name;
+	@JsonProperty()
+	private String filesize;
 
 	/**
 	 * data part
@@ -30,8 +36,9 @@ public class RestSession {
 		return "RestSession [rawScript=" + rawScript + ", storyId=" + storyId
 				+ ", renderedScript=" + renderedScript + ", renderedStdout="
 				+ renderedStdout + ", renderedStderr=" + renderedStderr
-				+ ", LocalStoryBean=" + LocalStoryBean + ", metaclass="
-				+ metaclass + "]";
+				+ ", path=" + path + ", name=" + name + ", filesize="
+				+ filesize + ", LocalStoryBean=" + LocalStoryBean
+				+ ", metaclass=" + metaclass + "]";
 	}
 
 	public int getStoryId() {
@@ -89,5 +96,13 @@ public class RestSession {
 
 	public void setMetaclass(JsTreeDataMeta metaclass) {
 		this.metaclass = metaclass;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

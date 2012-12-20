@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -33,12 +32,12 @@ import views.html.localStory.*;
 public class LocalStoryRest extends Controller {
 	final static LocalStoryApp localStoryApp = Spring.getBeanOfType(LocalStoryApp.class);
 
+	/**
+	 * scan local files
+	 * @return
+	 */
 	public static Result scan(){
-		Logger.info("finding local files ...");
-		Collection<File> all = new ArrayList<File>();
-		findFiles(new File("data"), all);
-	    System.out.println(all);
-		JsonNode result = Json.toJson(new JsDataTable());
+		JsonNode result = Json.toJson(new JsDataTable(localStoryApp.getBaseDir(), localStoryApp.scan()));
 	    return ok(result);
 	}
 
@@ -57,10 +56,30 @@ public class LocalStoryRest extends Controller {
 	 * @return
 	 */
 	public static Result table() {
-		JsonNode result = Json.toJson(new JsDataTable());
+		JsonNode result = Json.toJson(new JsDataTable(localStoryApp.getBaseDir(), localStoryApp.scan()));
 	    return ok(result);
 	}
 	
+	/**
+	 * REST api for finding and reading a script
+	 * @return
+	 */
+	@BodyParser.Of(BodyParser.TolerantJson.class)
+	public static Result get() {
+		/**
+		 * read json object
+		 */
+		RestSession klass = Json.fromJson(request().body().asJson(),RestSession.class);
+		try {
+			String result = localStoryApp.findFile(klass.getPath(),klass.getName());
+			klass.setRenderedScript(result);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return badRequest();
+		}
+		return ok(Json.toJson(klass));
+	}
+
 	/**
 	 * REST api for validating a script
 	 * @return

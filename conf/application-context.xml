@@ -13,10 +13,12 @@
 	<!-- Application injection -->
     <bean id="localStoryApp" class="service.application.LocalStoryApp">
     	<property name="localStorySvc" ref="localStorySvc"></property>
+    	<property name="localRepoManagerSvc" ref="localRepoManagerSvc"></property>
     </bean>
 
 	<!-- Business injection -->
     <bean id="localStorySvc" class="service.business.LocalStorySvc" />
+    <bean id="localRepoManagerSvc" class="service.business.impl.RepoManagerSvcSvn" />
 
 	<!-- Entity injection -->
 
