@@ -11,6 +11,7 @@ object ApplicationBuild extends Build {
       "org.springframework"    %    "spring-context"    %    "3.0.7.RELEASE",
       "org.springframework"    %    "spring-core"       %    "3.0.7.RELEASE",
       "org.springframework"    %    "spring-beans"      %    "3.0.7.RELEASE",
+      "org.tmatesoft.svnkit"   %    "svnkit-cli"        %    "1.7.6",
       "com.github.yroffin"     %    "jbehaviour-engine" %    "0.0.1-SNAPSHOT"
     )
 
