@@ -15,6 +15,7 @@ import service.Spring;
 import service.application.LocalStoryApp;
 
 import views.html.index;
+import views.html.mindmap;
 
 public class Application extends Controller {
 	final static LocalStoryApp localStoryApp = Spring.getBeanOfType(LocalStoryApp.class);
@@ -25,6 +26,14 @@ public class Application extends Controller {
 	 */
 	public static Result index() {
 		return ok(index.render("Your new application is ready.",GlobalParams.instance()));
+	}
+
+	/**
+	 * default index
+	 * @return
+	 */
+	public static Result mindmap() {
+		return ok(mindmap.render("Your new application is ready.",GlobalParams.instance()));
 	}
 
 	/**

@@ -1,6 +1,5 @@
-set JAVA_HOME=U:\tools\com\jdk\jdk1.7.0
-set PLAY_HOME=U:\tools\org\play\play-2.0.4
-set PATH=%JAVA_HOME%/bin;%PLAY_HOME%
-C:
+M2_HOME=U:\tools\org\apache\maven\3.1.0
 cd C:\Users\Yannick\git\jbehaviour-tools-ui
-play -DapplyEvolutions.default=true
+c:
+play  ~run
+

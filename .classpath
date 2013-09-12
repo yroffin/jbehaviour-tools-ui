@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" output=".target" path="app"/>
 	<classpathentry kind="src" output=".target" path="test"/>
+	<classpathentry kind="src" path="public/application"/>
 	<classpathentry kind="lib" path="C:/Users/Yannick/git/jbehaviour-tools-ui/target/scala-2.9.1/classes_managed"/>
 	<classpathentry kind="lib" path="U:/tools/org/play/play-2.0.4/repository/local/play/play_2.9.1/2.0.4/jars/play_2.9.1.jar"/>
 	<classpathentry kind="lib" path="U:/tools/org/play/play-2.0.4/repository/local/play/templates_2.9.1/2.0.4/jars/templates_2.9.1.jar"/>

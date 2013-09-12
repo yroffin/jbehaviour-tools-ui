@@ -1,0 +1,12 @@
+@(message: String, params: models.params.GlobalParams)
+
+@main("Default") {
+	<p>Drag shapes around.</p>
+	<button onclick="return add({x:190, y:100, width:30, height:20, fields:[]});"></button>
+	<div id="holder"></div>
+	<p id="copy">Demo of <a href="http://raphaeljs.com/">Raphaël</a>—JavaScript Vector Library</p> 
+	
+	<div id="dialogDetail" title="Details">
+	<textarea id="keyPosX" rows="5" cols="20" class="ui-resizable" style="margin: 0px; resize: none; position: static; zoom: 1; display: block; height: 80px; width: 177px;"></textarea>
+	</div>
+}

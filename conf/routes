@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                            controllers.Application.index()
+GET     /mindmap                     controllers.Application.mindmap()
 GET     /rest/reload                 controllers.Application.reload
 POST    /rest/reload                 controllers.Application.reload
 
