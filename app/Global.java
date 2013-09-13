@@ -14,7 +14,7 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.Play;
-import play.db.jpa.Transactional;
+import play.db.ebean.Transactional;
 import service.Spring;
 import service.application.LocalStoryApp;
 
