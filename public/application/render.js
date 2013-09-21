@@ -487,7 +487,7 @@ function dumpShape(shape) {
 			JSON.stringify(shape.embeded.anchor.element.getBBox())+'\n');
 }
 
-$(document).ready(function () {
+$(function() {
 	/**
 	 * build dialog
 	 */
@@ -504,7 +504,7 @@ $(document).ready(function () {
 	/**
 	 * build Raphael
 	 */
-	paper = Raphael("holder", 1024, 768);
+	//paper = Raphael("holder", 1024, 768);
 	
-	buildGraph(_session);
+	//buildGraph(_session);
 });
