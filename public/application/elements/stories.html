@@ -1,0 +1,56 @@
+{{stdout}}
+<div id="report-dialog">
+	<form>
+	
+	<div class="container-fluid">
+	  <div class="row-fluid">
+	    <div class="span2">
+	      <!--Sidebar content-->
+	
+	  <fieldset><input ng-model="query" type="text" placeholder="Type something…"></fieldset>
+	
+	
+	      Search: <input ng-model="query" type=text">
+	      Sort by:
+	      <select ng-model="orderProp">
+	        <option value="name">Titre</option>
+	        <option value="id">Id</option>
+	      </select>
+	 
+	    </div>
+	    <div class="span10">
+	      <!--Body content-->
+
+	<table class="ui-widget ui-widget-content">
+	  <caption>Stories</caption>
+	  <thead>
+	    <tr class="ui-widget-header">
+	      <th>Id</th>
+	      <th>Description</th>
+	      <th>Name</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr ng-repeat="story in stories | filter:query | orderBy:orderProp">
+	      <td><a href="#/story/{{story.id}}">{{story.id}}</a></td>
+	      <td>{{story.description}}</td>
+	      <td><a ng-click="loadStory(story)">{{story.name}}</a></td>
+	    </tr>
+	  </tbody>
+	</table>
+	 
+	    </div>
+	  </div>
+	</div>
+	
+	</form>
+</div>
+
+<div id="report-story-dialog">
+	<table>
+		<tr>
+			<td><textarea id="report-dialog-story" cols="80" rows="20"></textarea></td>
+	    	<td><button ng-click="saveStory()">Save</button><button ng-click="executeStory()">Execute</button></td>
+	    </tr>
+	</table>
+</div

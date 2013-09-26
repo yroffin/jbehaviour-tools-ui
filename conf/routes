@@ -3,27 +3,18 @@
 # ~~~~
 
 # Home page
-GET     /                            controllers.Application.index()
-GET     /mindmap                     controllers.Application.mindmap()
-GET     /rest/reload                 controllers.Application.reload
-POST    /rest/reload                 controllers.Application.reload
+GET     /                         controllers.Application.index()
 
 # LocalStory
-GET     /rest/story/get           controllers.LocalStoryRest.get()
-POST    /rest/story/get           controllers.LocalStoryRest.get()
-GET     /rest/story/scan          controllers.LocalStoryRest.scan()
-POST    /rest/story/scan          controllers.LocalStoryRest.scan()
-GET     /rest/story/table         controllers.LocalStoryRest.table()
-POST    /rest/story/table         controllers.LocalStoryRest.table()
-GET     /rest/story/execute       controllers.LocalStoryRest.execute()
-POST    /rest/story/execute       controllers.LocalStoryRest.execute()
-GET     /rest/story/:id/story     controllers.LocalStoryRest.story(id: Long)
-GET     /rest/story/render        controllers.LocalStoryRest.render
-POST    /rest/story/render        controllers.LocalStoryRest.render
-GET     /rest/story/tree          controllers.LocalStoryRest.tree(operation: String ?= "get")
-GET     /rest/story/create        controllers.LocalStoryRest.create
-GET     /rest/story/update        controllers.LocalStoryRest.update
-GET     /rest/story/delete        controllers.LocalStoryRest.delete
+GET     /rest/stories             controllers.LocalStoryRest.stories()
+POST    /rest/stories             controllers.LocalStoryRest.stories()
+GET     /rest/story               controllers.LocalStoryRest.story()
+POST    /rest/story               controllers.LocalStoryRest.story()
+GET     /rest/story/:id           controllers.LocalStoryRest.storyById(id: Long)
+POST    /rest/story/:id           controllers.LocalStoryRest.storyById(id: Long)
+# LocalStory runner
+GET     /rest/execute             controllers.LocalStoryRest.execute()
+POST    /rest/execute             controllers.LocalStoryRest.execute()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
